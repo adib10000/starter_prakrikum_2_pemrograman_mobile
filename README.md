@@ -1,4 +1,5 @@
 # 🎯 Tugas Praktikum 2 Pemrograman Mobile 
+## LINK VIDEO : [Screencast from 2025-10-23 20-38-54.webm](https://github.com/user-attachments/assets/de5487cc-42ce-4e3e-a463-71740b81848c)
 
 ## 📝 Deskripsi Tugas
 - Buat **aplikasi Flutter sederhana** dengan pedoman dari:  
