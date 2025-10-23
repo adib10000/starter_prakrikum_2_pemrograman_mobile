@@ -12,31 +12,65 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-enum Category {
-  all,
-  accessories,
-  clothing,
-  home,
-}
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class Product {
-  const Product({
-    required this.category,
-    required this.id,
-    required this.isFeatured,
-    required this.name,
-    required this.price,
-  });
+import '../model/product.dart';
 
-  final Category category;
-  final int id;
-  final bool isFeatured;
-  final String name;
-  final int price;
+class ProductCard extends StatelessWidget {
+  const ProductCard(
+      {this.imageAspectRatio = 33 / 49, required this.product, Key? key})
+      : assert(imageAspectRatio > 0),
+        super(key: key);
 
-  String get assetName => '$id-0.jpg';
-  String get assetPackage => 'shrine_images';
+  final double imageAspectRatio;
+  final Product product;
+
+  static const kTextBoxHeight = 65.0;
 
   @override
-  String toString() => "$name (id=$id)";
+  Widget build(BuildContext context) {
+    final NumberFormat formatter = NumberFormat.simpleCurrency(
+        decimalDigits: 0, locale: Localizations.localeOf(context).toString());
+    final ThemeData theme = Theme.of(context);
+
+    final imageWidget = Image.asset(
+      product.assetName,
+      package: product.assetPackage,
+      fit: BoxFit.cover,
+    );
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        AspectRatio(
+          aspectRatio: imageAspectRatio,
+          child: imageWidget,
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).textScaler.scale(kTextBoxHeight),
+          width: 121.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                product.name,
+                style: theme.textTheme.labelLarge,
+                softWrap: false,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+              const SizedBox(height: 4.0),
+              Text(
+                formatter.format(product.price),
+                style: theme.textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }

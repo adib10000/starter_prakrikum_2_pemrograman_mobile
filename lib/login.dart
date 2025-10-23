@@ -27,6 +27,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final ColorScheme colorScheme = theme.colorScheme;
+
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -41,20 +44,25 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
             const SizedBox(height: 120.0),
-            // TODO: Remove filled: true values (103)
             TextField(
               controller: _usernameController,
-              decoration: const InputDecoration(
-                filled: true,
+              decoration: InputDecoration(
                 labelText: 'Username',
+                suffixIcon: Icon(
+                  Icons.person_outlined,
+                  color: colorScheme.primary,
+                ),
               ),
             ),
             const SizedBox(height: 12.0),
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(
-                filled: true,
+              decoration: InputDecoration(
                 labelText: 'Password',
+                suffixIcon: Icon(
+                  Icons.lock_outline,
+                  color: colorScheme.primary,
+                ),
               ),
               obscureText: true,
             ),
@@ -62,21 +70,34 @@ class _LoginPageState extends State<LoginPage> {
             OverflowBar(
               alignment: MainAxisAlignment.end,
               children: <Widget>[
-                // TODO: Add a beveled rectangular border to CANCEL (103)
                 TextButton(
                   child: const Text('CANCEL'),
                   onPressed: () {
                     _usernameController.clear();
                     _passwordController.clear();
                   },
+                  style: TextButton.styleFrom(
+                    shape: BeveledRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(
+                        color: colorScheme.secondary.withValues(alpha: 0.7),
+                      ),
+                    ),
+                    foregroundColor: colorScheme.secondary,
+                  ),
                 ),
-                // TODO: Add an elevation to NEXT (103)
-                // TODO: Add a beveled rectangular border to NEXT (103)
                 ElevatedButton(
                   child: const Text('NEXT'),
                   onPressed: () {
                     Navigator.pop(context);
                   },
+                  style: ElevatedButton.styleFrom(
+                    elevation: 8.0,
+                    shadowColor: colorScheme.primary.withValues(alpha: 0.4),
+                    shape: BeveledRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                 ),
               ],
             ),
